@@ -11,16 +11,21 @@ import java.util.Map;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
-import android.webkit.GeolocationPermissions;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.webkit.WebChromeClient;
+import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
+import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsDownloader;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
+import com.tencent.smtt.sdk.WebChromeClient;
 
-import com.facebook.react.views.webview.WebViewConfig;
+
 import com.facebook.react.views.webview.events.TopLoadingErrorEvent;
 import com.facebook.react.views.webview.events.TopLoadingFinishEvent;
 import com.facebook.react.views.webview.events.TopLoadingStartEvent;
+
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactContext;
@@ -60,9 +65,9 @@ import android.net.Uri;
  *  - canGoBack - boolean, whether there is anything on a history stack to go back
  *  - canGoForward - boolean, whether it is possible to request GO_FORWARD command
  */
-public class X5WebViewManager extends SimpleViewManager<WebView> {
+public class RNX5WebViewManager extends SimpleViewManager<WebView> {
 
-    private static final String REACT_CLASS = "RCTWebView";
+    private static final String REACT_CLASS = "RNX5WebView";
 
     private static final String HTML_ENCODING = "UTF-8";
     private static final String HTML_MIME_TYPE = "text/html; charset=utf-8";
@@ -78,9 +83,9 @@ public class X5WebViewManager extends SimpleViewManager<WebView> {
     // state and release page resources (including any running JavaScript).
     private static final String BLANK_URL = "about:blank";
 
-    private WebViewConfig mWebViewConfig;
+    private RNX5WebViewConfig mX5WebViewConfig;
 
-    private static class ReactWebViewClient extends WebViewClient {
+    private static class X5WebViewClient extends WebViewClient {
 
         private boolean mLastLoadFailed = false;
 
@@ -89,7 +94,7 @@ public class X5WebViewManager extends SimpleViewManager<WebView> {
             super.onPageFinished(webView, url);
 
             if (!mLastLoadFailed) {
-                ReactWebView reactWebView = (ReactWebView) webView;
+                X5WeView reactWebView = (X5WeView) webView;
                 reactWebView.callInjectedJavaScript();
                 emitFinishEvent(webView, url);
             }
@@ -185,7 +190,7 @@ public class X5WebViewManager extends SimpleViewManager<WebView> {
      * Subclass of {@link WebView} that implements {@link LifecycleEventListener} interface in order
      * to call {@link WebView#destroy} on activty destroy event and also to clear the client
      */
-    private static class ReactWebView extends WebView implements LifecycleEventListener {
+    private static class X5WeView extends WebView implements LifecycleEventListener {
         private @Nullable String injectedJS;
 
         /**
@@ -195,7 +200,7 @@ public class X5WebViewManager extends SimpleViewManager<WebView> {
          * Reactive Native needed for access to ReactNative internal system functionality
          *
          */
-        public ReactWebView(ThemedReactContext reactContext) {
+        public X5WeView(ThemedReactContext reactContext) {
             super(reactContext);
         }
 
@@ -232,33 +237,44 @@ public class X5WebViewManager extends SimpleViewManager<WebView> {
         }
     }
 
-    public X5WebViewManager() {
-        mWebViewConfig = new WebViewConfig() {
-            public void configWebView(WebView webView) {
-            }
+    public RNX5WebViewManager(ReactContext reactContext) {
+        QbSdk.allowThirdPartyAppDownload(true);
+        QbSdk.initX5Environment(reactContext, QbSdk.WebviewInitType.FIRSTUSE_AND_PRELOAD, new PreInitCallback());
+
+        mX5WebViewConfig = new RNX5WebViewConfig() {
+            public void configWebView(WebView webView) {}
         };
     }
 
-    public X5WebViewManager(WebViewConfig webViewConfig) {
-        mWebViewConfig = webViewConfig;
-    }
 
     @Override
     public String getName() {
         return REACT_CLASS;
     }
 
+    private class PreInitCallback implements QbSdk.PreInitCallback {
+        public void onCoreInitFinished() {
+            // TODO: callback for this
+            Log.e("RNX5WebView:", "core init finished");
+        }
+
+        public void onViewInitFinished(boolean var1) {
+            // TODO: callback for this
+            Log.e("RNX5WebView:", "view init finished");
+        }
+    }
+
     @Override
     protected WebView createViewInstance(ThemedReactContext reactContext) {
-        ReactWebView webView = new ReactWebView(reactContext);
+        X5WeView webView = new X5WeView(reactContext);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
-            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissionsCallback callback) {
                 callback.invoke(origin, true, false);
             }
         });
         reactContext.addLifecycleEventListener(webView);
-        mWebViewConfig.configWebView(webView);
+        mX5WebViewConfig.configWebView(webView);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
 
@@ -305,7 +321,7 @@ public class X5WebViewManager extends SimpleViewManager<WebView> {
 
     @ReactProp(name = "injectedJavaScript")
     public void setInjectedJavaScript(WebView view, @Nullable String injectedJavaScript) {
-        ((ReactWebView) view).setInjectedJavaScript(injectedJavaScript);
+        ((X5WeView) view).setInjectedJavaScript(injectedJavaScript);
     }
 
     @ReactProp(name = "source")
@@ -365,7 +381,7 @@ public class X5WebViewManager extends SimpleViewManager<WebView> {
     @Override
     protected void addEventEmitters(ThemedReactContext reactContext, WebView view) {
         // Do not register default touch emitter and let WebView implementation handle touches
-        view.setWebViewClient(new ReactWebViewClient());
+        view.setWebViewClient(new X5WebViewClient());
     }
 
     @Override
@@ -398,8 +414,8 @@ public class X5WebViewManager extends SimpleViewManager<WebView> {
     @Override
     public void onDropViewInstance(WebView webView) {
         super.onDropViewInstance(webView);
-        ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((ReactWebView) webView);
-        ((ReactWebView) webView).cleanupCallbacksAndDestroy();
+        ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((X5WeView) webView);
+        ((X5WeView) webView).cleanupCallbacksAndDestroy();
     }
 }
 

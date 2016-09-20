@@ -15,7 +15,7 @@ class X5 extends Component {
     render() {
         return (
             <X5WebView
-                source={{uri:"http://www.bing.com"}}
+                source={{uri: 'https://shimo.im/'}}
                 style={styles.webView}
             />
         );
