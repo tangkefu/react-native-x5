@@ -13,9 +13,9 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
+
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.sdk.QbSdk;
-import com.tencent.smtt.sdk.TbsDownloader;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -239,7 +239,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
 
     public RNX5WebViewManager(ReactContext reactContext) {
         QbSdk.allowThirdPartyAppDownload(true);
-        QbSdk.initX5Environment(reactContext, QbSdk.WebviewInitType.FIRSTUSE_AND_PRELOAD, new PreInitCallback());
+        QbSdk.initX5Environment(reactContext, QbSdk.WebviewInitType.FIRSTUSE_AND_PRELOAD, null);
 
         mX5WebViewConfig = new RNX5WebViewConfig() {
             public void configWebView(WebView webView) {}
@@ -252,21 +252,10 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
         return REACT_CLASS;
     }
 
-    private class PreInitCallback implements QbSdk.PreInitCallback {
-        public void onCoreInitFinished() {
-            // TODO: callback for this
-            Log.e("RNX5WebView:", "core init finished");
-        }
-
-        public void onViewInitFinished(boolean var1) {
-            // TODO: callback for this
-            Log.e("RNX5WebView:", "view init finished");
-        }
-    }
-
     @Override
     protected WebView createViewInstance(ThemedReactContext reactContext) {
         X5WeView webView = new X5WeView(reactContext);
+        
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissionsCallback callback) {

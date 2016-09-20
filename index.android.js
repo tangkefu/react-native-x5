@@ -8,7 +8,8 @@ import ReactNative, {
     ActivityIndicator,
     StyleSheet,
     UIManager,
-    View
+    View,
+    NativeModules
 } from 'react-native';
 
 import deprecatedPropType from 'react-native/Libraries/Utilities/deprecatedPropType';
@@ -147,6 +148,12 @@ class X5WebView extends Component {
         javaScriptEnabled : true,
         scalesPageToFit: true,
     };
+
+    static getX5CoreVersion = function (cb: Function) {
+        if (cb) {
+            NativeModules.X5WebView.getX5CoreVersion(cb);
+        }
+    }
 
     state = {
         viewState: WebViewState.IDLE,
