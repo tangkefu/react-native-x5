@@ -1,0 +1,28 @@
+{
+    "name": "react-native-x5",
+    "version": "0.0.1-beta",
+    "description": "SVG library for react-native",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/shimohq/react-native-x5"
+    },
+    "license": "MIT",
+    "keywords": [
+        "react-component",
+        "react-native",
+        "X5",
+        "webview",
+        "android"
+    ],
+    "scripts": {
+        "lint": "eslint ./"
+    },
+    "peerDependencies": {
+        "react-native": ">=0.33.0"
+    },
+    "devDependencies": {
+        "babel-eslint": "^6.1.2",
+        "eslint": "^2.13.1",
+        "eslint-plugin-react": "^4.3.0"
+    }
+}
