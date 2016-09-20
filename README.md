@@ -1,5 +1,5 @@
 # react-native-x5
-X5's WebView for React Native on Android
+X5's WebView for React Native on Android (Interfaces based on ReactNative's WebView Component)
 
 ### Dependencies
 
@@ -7,6 +7,26 @@ X5's WebView for React Native on Android
 
 ### Installation
 
+#### Install and Link
+
+* Install from npm
+
+```bash
+npm i react-native-x5 --save
+
+```
+
+* Link native library
+
+You can use react-native-cli:
+```bash
+react-native link react-native-x5
+```
+
+Or rnpm:
+```bash
+rnpm link react-native-x5
+```
 
 #### Add uses-permission
 
@@ -23,3 +43,22 @@ Add those lines to AndroidManifest.xml in your project.
 
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 ```
+
+
+### Usage
+
+#### Import
+
+```
+import WebView from 'react-native-x5';
+```
+
+#### Props
+
+Totally same as [WebView](http://facebook.github.io/react-native/docs/webview.html) for react-native
+
+
+### Detail
+
+[腾讯浏览器服务](http://x5.tencent.com/index)
+

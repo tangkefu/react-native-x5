@@ -1,6 +1,6 @@
 {
     "name": "react-native-x5",
-    "version": "0.0.1-beta",
+    "version": "0.0.1",
     "description": "SVG library for react-native",
     "repository": {
         "type": "git",
@@ -12,7 +12,10 @@
         "react-native",
         "X5",
         "webview",
-        "android"
+        "android",
+        "QQ浏览器",
+        "blink",
+        "webkit"
     ],
     "scripts": {
         "lint": "eslint ./"
