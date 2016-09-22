@@ -1,4 +1,4 @@
-# react-native-x5 
+# react-native-x5
 X5's WebView for React Native on Android (Interfaces based on ReactNative's WebView Component)
 
 ### Dependencies
@@ -56,6 +56,18 @@ import WebView from 'react-native-x5';
 #### Props
 
 Totally same as [WebView](http://facebook.github.io/react-native/docs/webview.html) for react-native
+
+Additional methods:
+
+* WebView.getX5CoreVersion(callback) `static`
+get X5's core version through callback
+
+
+```
+WebView.getX5CoreVersion(function callback (version) {
+    console.log(version); // get `0` if X5 is not installed correctly
+});
+```
 
 
 ### Detail
