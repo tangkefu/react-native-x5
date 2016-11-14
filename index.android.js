@@ -13,7 +13,7 @@ import ReactNative, {
 } from 'react-native';
 
 import deprecatedPropType from 'react-native/Libraries/Utilities/deprecatedPropType';
-import requireNativeComponent from 'react-native/Libraries/ReactIOS/requireNativeComponent';
+import requireNativeComponent from 'react-native/Libraries/ReactNative/requireNativeComponent';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 const RCT_WEBVIEW_REF = 'x5webview';
