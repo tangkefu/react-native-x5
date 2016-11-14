@@ -9,11 +9,11 @@ import ReactNative, {
     StyleSheet,
     UIManager,
     View,
-    NativeModules
+    NativeModules,
+    requireNativeComponent
 } from 'react-native';
 
 import deprecatedPropType from 'react-native/Libraries/Utilities/deprecatedPropType';
-import requireNativeComponent from 'react-native/Libraries/ReactNative/requireNativeComponent';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 const RCT_WEBVIEW_REF = 'x5webview';
