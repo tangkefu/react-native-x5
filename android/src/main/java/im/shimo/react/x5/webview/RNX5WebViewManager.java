@@ -16,6 +16,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsListener;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -238,8 +239,31 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
     }
 
     public RNX5WebViewManager(ReactContext reactContext) {
-        QbSdk.allowThirdPartyAppDownload(true);
-        QbSdk.initX5Environment(reactContext, QbSdk.WebviewInitType.FIRSTUSE_AND_PRELOAD, null);
+        QbSdk.setTbsListener(new TbsListener() {
+            @Override
+            public void onDownloadFinish(int i) {
+                Log.d("react-native-x5","onDownloadFinish");
+            }
+            @Override
+            public void onInstallFinish(int i) {
+                Log.d("react-native-x5","onInstallFinish");
+            }
+            @Override
+            public void onDownloadProgress(int i) {
+                Log.d("react-native-x5","onDownloadProgress:"+i);
+            }
+        });
+
+        QbSdk.initX5Environment(reactContext, new QbSdk.PreInitCallback() {
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                Log.d("react-native-x5", " onViewInitFinished is " + arg0);
+            }
+            @Override
+            public void onCoreInitFinished() {
+                Log.d("react-native-x5", " onCoreInitFinished ");
+            }
+        });
 
         mX5WebViewConfig = new RNX5WebViewConfig() {
             public void configWebView(WebView webView) {}
@@ -255,7 +279,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
     @Override
     protected WebView createViewInstance(ThemedReactContext reactContext) {
         X5WeView webView = new X5WeView(reactContext);
-        
+
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissionsCallback callback) {
