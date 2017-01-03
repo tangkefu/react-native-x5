@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React, { cloneElement, PropTypes } from 'react';
 import { WebView, NativeModules } from 'react-native';
 import requireNativeComponent from 'requireNativeComponent';
 
@@ -26,6 +26,10 @@ class X5WebView extends WebView {
     }
 }
 
-const RNX5WebView = requireNativeComponent('RNX5WebView', X5WebView);
+const RNX5WebView = requireNativeComponent('RNX5WebView', X5WebView, {
+    nativeOnly: {
+        messagingEnabled: PropTypes.bool,
+    },
+});
 
 export default X5WebView;
