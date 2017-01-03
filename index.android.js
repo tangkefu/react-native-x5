@@ -3,10 +3,14 @@ import { WebView, NativeModules } from 'react-native';
 import requireNativeComponent from 'requireNativeComponent';
 
 class X5WebView extends WebView {
-    static getX5CoreVersion = function (cb: Function) {
+    static getX5CoreVersion = function (cb: Function): Promise {
         if (cb) {
             NativeModules.X5WebView.getX5CoreVersion(cb);
         }
+
+        return new Promise(resolve => {
+            NativeModules.X5WebView.getX5CoreVersion(resolve);
+        });
     };
 
     render() {
