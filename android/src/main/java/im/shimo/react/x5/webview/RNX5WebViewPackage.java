@@ -15,30 +15,11 @@ import com.tencent.smtt.sdk.WebView;
 
 
 public class RNX5WebViewPackage implements ReactPackage {
-    private class X5WebViewModule extends ReactContextBaseJavaModule {
-
-        private ReactApplicationContext mReactContext;
-
-        public X5WebViewModule(ReactApplicationContext reactContext) {
-            super(reactContext);
-            mReactContext = reactContext;
-        }
-
-        @Override
-        public String getName() {
-            return "X5WebView";
-        }
-
-        @ReactMethod
-        public void getX5CoreVersion(Callback callback) {
-            callback.invoke(WebView.getTbsCoreVersion(mReactContext));
-        }
-    }
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new X5WebViewModule(reactContext));
+        modules.add(new RNX5WebViewModule(reactContext));
         return modules;
     }
 
@@ -50,7 +31,7 @@ public class RNX5WebViewPackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
         List<ViewManager> modules = new ArrayList<>();
-        modules.add(new RNX5WebViewManager(reactContext));
+        modules.add(new RNX5WebViewManager());
         return modules;
     }
 }

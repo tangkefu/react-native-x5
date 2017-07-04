@@ -6,17 +6,12 @@
 import React, { Component } from 'react';
 import {
     AppRegistry,
-    StyleSheet
+    StyleSheet, View
 } from 'react-native';
 
 import X5WebView from 'react-native-x5';
 
 class X5 extends Component {
-    componentDidMount() {
-        X5WebView.getX5CoreVersion(version => {
-            console.log(version);
-        });
-    }
 
     render() {
         return (
