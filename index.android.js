@@ -1,6 +1,5 @@
 import React, { cloneElement, PropTypes } from 'react';
-import { WebView, NativeModules } from 'react-native';
-import requireNativeComponent from 'requireNativeComponent';
+import { WebView, NativeModules, requireNativeComponent } from 'react-native';
 
 class X5WebView extends WebView {
     static getX5CoreVersion = function (cb: Function): Promise {
