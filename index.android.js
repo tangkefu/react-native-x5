@@ -1,4 +1,7 @@
-import React, { cloneElement, PropTypes } from 'react';
+import React, { cloneElement  } from 'react';
+
+import PropTypes from 'prop-types';
+
 import { WebView, NativeModules, requireNativeComponent } from 'react-native';
 
 class X5WebView extends WebView {
