@@ -42,7 +42,6 @@ public class RNX5WebViewPackage implements ReactPackage {
         return modules;
     }
 
-    @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
